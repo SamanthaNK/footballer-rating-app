@@ -5,9 +5,6 @@ node_modules/
 
 # Environment & Secrets
 .env
-.env.local
-.env.development
-.env.production
 backend/serviceAccountKey.json
 
 # Expo / React Native
