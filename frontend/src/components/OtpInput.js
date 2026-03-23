@@ -4,12 +4,10 @@ import { theme } from '../theme/theme.js';
 
 export default function OtpInput({ onComplete, disabled }) {
     const [digits, setDigits] = useState(['', '', '', '', '', '']);
-
     const inputRefs = useRef([]);
 
     const handleChange = (text, index) => {
         const digit = text.replace(/[^0-9]/g, '').slice(-1);
-
         const updated = [...digits];
         updated[index] = digit;
         setDigits(updated);
@@ -43,7 +41,7 @@ export default function OtpInput({ onComplete, disabled }) {
                     keyboardType="number-pad"
                     maxLength={1}
                     textAlign="center"
-                    selectionColor={theme.colors.textPrimary}
+                    selectionColor={theme.colors.accent}
                     editable={!disabled}
                 />
             ))}
@@ -60,19 +58,19 @@ const styles = StyleSheet.create({
     },
     box: {
         flex: 1,
-        height: 50,
+        height: 52,
         borderRadius: theme.radius.sm,
         borderWidth: 1,
         fontFamily: theme.fonts.display500,
         fontSize: 22,
         color: theme.colors.textPrimary,
+        backgroundColor: theme.colors.bgSurface,
     },
     boxFilled: {
-        backgroundColor: theme.colors.bgSurface,
-        borderColor: theme.colors.borderFocus,
+        borderColor: theme.colors.accent,
+        color: theme.colors.accent,
     },
     boxEmpty: {
-        backgroundColor: theme.colors.bgSurface,
         borderColor: theme.colors.border,
     },
 });

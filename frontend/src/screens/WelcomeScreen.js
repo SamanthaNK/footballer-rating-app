@@ -1,121 +1,158 @@
 import React from 'react';
 import {
-    View, Text, TouchableOpacity, StyleSheet,
+    View, Text, Image, TouchableOpacity, StyleSheet,
     StatusBar, Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import Logo from '../components/Logo.js';
 import { theme } from '../theme/theme.js';
 
-const { height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const features = [
-    { icon: 'star-outline', title: 'Rate Players', subtitle: 'Share your ratings' },
-    { icon: 'podium-outline', title: 'Track Rankings', subtitle: "See who's on top" },
-];
+const messiImage = require('../../assets/messi.png');
+
+function SlateTexture() {
+    const DOT_SPACING = 18;
+    const DOT_SIZE = 1.2;
+
+    const cols = Math.ceil(width / DOT_SPACING);
+    const rows = Math.ceil(height * 0.62 / DOT_SPACING);
+
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            dots.push(
+                <View
+                    key={`${row}-${col}`}
+                    style={[
+                        styles.dot,
+                        {
+                            left: col * DOT_SPACING,
+                            top: row * DOT_SPACING,
+                            width: DOT_SIZE,
+                            height: DOT_SIZE,
+                            borderRadius: DOT_SIZE / 2,
+                        },
+                    ]}
+                />
+            );
+        }
+    }
+    return <View style={styles.textureLayer} pointerEvents="none">{dots}</View>;
+}
 
 export default function WelcomeScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.safe}>
+        <View style={styles.container}>
             <StatusBar barStyle="light-content" backgroundColor={theme.colors.bgBase} />
+            <Image source={messiImage} style={styles.heroImage} resizeMode="cover" />
+            <SlateTexture />
+            <View style={styles.fade} pointerEvents="none" />
 
-            <View style={styles.content}>
-                <Logo size="sm" />
+            <SafeAreaView style={styles.bottomSafe} edges={['bottom']}>
+                <View style={styles.content}>
+                    <Logo size="sm" />
+                    <Text style={styles.headline}>The World's Best.</Text>
+                    <View style={styles.cyanRule} />
 
-                <Text style={styles.headline}>
-                    Rate and review the world's best footballers
-                </Text>
+                    <TouchableOpacity
+                        style={styles.primaryButton}
+                        onPress={() => navigation.navigate('Register')}
+                        activeOpacity={0.88}
+                    >
+                        <Text style={styles.primaryButtonText}>SIGN UP FREE</Text>
+                    </TouchableOpacity>
 
-                <View style={styles.featureList}>
-                    {features.map((feature, index) => (
-                        <View key={index} style={styles.featurePill}>
-                            <Ionicons name={feature.icon} size={16} color="#484848" />
-                            <View style={styles.featureText}>
-                                <Text style={styles.featureTitle}>{feature.title}</Text>
-                                <Text style={styles.featureSubtitle}>{feature.subtitle}</Text>
-                            </View>
-                        </View>
-                    ))}
+                    <TouchableOpacity
+                        style={styles.ghostButton}
+                        onPress={() => navigation.navigate('Login')}
+                        activeOpacity={0.75}
+                    >
+                        <Text style={styles.ghostButtonText}>LOG IN</Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.terms}>
+                        By continuing you agree to our{' '}
+                        <Text style={styles.termsLink}>Terms</Text>
+                        {' '}&{' '}
+                        <Text style={styles.termsLink}>Privacy Policy</Text>.
+                    </Text>
+
                 </View>
-
-                <TouchableOpacity
-                    style={styles.primaryButton}
-                    onPress={() => navigation.navigate('Register')}
-                    activeOpacity={0.88}
-                >
-                    <Text style={styles.primaryButtonText}>SIGN UP FREE</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.ghostButton}
-                    onPress={() => navigation.navigate('Login')}
-                    activeOpacity={0.75}
-                >
-                    <Text style={styles.ghostButtonText}>LOG IN</Text>
-                </TouchableOpacity>
-
-                <Text style={styles.terms}>
-                    By signing up you agree to our{' '}
-                    <Text style={styles.termsLink}>Terms of Use</Text>
-                    {' '}and{' '}
-                    <Text style={styles.termsLink}>Privacy Policy</Text>.
-                </Text>
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    safe: {
+    container: {
         flex: 1,
         backgroundColor: theme.colors.bgBase,
     },
-    content: {
+
+    heroImage: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        height: height * 0.62,
+    },
+
+    textureLayer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: height * 0.62,
+        overflow: 'hidden',
+    },
+    dot: {
+        position: 'absolute',
+        backgroundColor: '#12181B',
+        opacity: 0.35,
+    },
+
+    fade: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: height * 0.55,
+        backgroundColor: theme.colors.bgBase,
+        opacity: 0,
+    },
+
+    bottomSafe: {
         flex: 1,
         justifyContent: 'flex-end',
+    },
+    content: {
         paddingHorizontal: 22,
         paddingBottom: 28,
+        paddingTop: 32,
+        backgroundColor: theme.colors.bgBase,
+        borderTopWidth: 1,
+        borderTopColor: theme.colors.border,
     },
+
     headline: {
-        fontFamily: theme.fonts.display400,
-        fontSize: 22,
-        letterSpacing: 0.5,
+        fontFamily: theme.fonts.display700,
+        fontSize: 30,
+        letterSpacing: 1.5,
         color: theme.colors.textPrimary,
         textTransform: 'uppercase',
-        marginTop: 14,
-        marginBottom: 16,
+        marginTop: 12,
+        marginBottom: 12,
     },
-    featureList: {
-        gap: 8,
+
+    cyanRule: {
+        width: 40,
+        height: 2,
+        backgroundColor: theme.colors.accent,
         marginBottom: 24,
     },
-    featurePill: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-        backgroundColor: theme.colors.bgElevated,
-        borderWidth: 1,
-        borderColor: theme.colors.border,
-        borderRadius: theme.radius.sm,
-        paddingHorizontal: 14,
-        paddingVertical: 10,
-    },
-    featureText: {
-        gap: 2,
-    },
-    featureTitle: {
-        fontFamily: theme.fonts.display500,
-        fontSize: 12,
-        letterSpacing: 1,
-        color: theme.colors.textPrimary,
-        textTransform: 'uppercase',
-    },
-    featureSubtitle: {
-        fontFamily: theme.fonts.body300,
-        fontSize: 11,
-        color: theme.colors.textSecondary,
-    },
+
     primaryButton: {
         width: '100%',
         backgroundColor: theme.colors.btnBg,
@@ -125,16 +162,17 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     primaryButtonText: {
-        fontFamily: theme.fonts.display500,
+        fontFamily: theme.fonts.display700,
         fontSize: 13,
-        letterSpacing: 3,
+        letterSpacing: 4,
         color: theme.colors.btnText,
         textTransform: 'uppercase',
     },
+
     ghostButton: {
         width: '100%',
         borderWidth: 1,
-        borderColor: '#222',
+        borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         paddingVertical: 13,
         alignItems: 'center',
@@ -142,19 +180,22 @@ const styles = StyleSheet.create({
     ghostButtonText: {
         fontFamily: theme.fonts.display400,
         fontSize: 13,
-        letterSpacing: 3,
-        color: '#444',
+        letterSpacing: 4,
+        color: theme.colors.textPrimary,
         textTransform: 'uppercase',
     },
+
     terms: {
         fontFamily: theme.fonts.body300,
         fontSize: 9,
-        color: '#2E2E2E',
+        color: theme.colors.textSecondary,
         textAlign: 'center',
         lineHeight: 15,
-        marginTop: 11,
+        marginTop: 12,
+        opacity: 0.6,
     },
     termsLink: {
-        color: '#444',
+        color: theme.colors.accent,
+        opacity: 1,
     },
 });

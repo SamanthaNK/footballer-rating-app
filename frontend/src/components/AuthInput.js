@@ -43,7 +43,7 @@ export default function AuthInput({
                 <Feather
                     name={iconName}
                     size={14}
-                    color={isFocused ? '#505050' : '#303030'}
+                    color={isFocused ? theme.colors.accent : theme.colors.textSecondary}
                     style={styles.leftIcon}
                 />
 
@@ -74,7 +74,7 @@ export default function AuthInput({
                         <Feather
                             name={passwordVisible ? 'eye-off' : 'eye'}
                             size={14}
-                            color="#404040"
+                            color={theme.colors.textSecondary}
                         />
                     </TouchableOpacity>
                 )}
@@ -85,12 +85,12 @@ export default function AuthInput({
 
 const styles = StyleSheet.create({
     group: {
-        marginBottom: 11,
+        marginBottom: 12,
     },
     label: {
         fontFamily: theme.fonts.body500,
         fontSize: 9,
-        letterSpacing: 2,
+        letterSpacing: 2.5,
         textTransform: 'uppercase',
         color: theme.colors.textSecondary,
         marginBottom: 5,
@@ -106,14 +106,14 @@ const styles = StyleSheet.create({
     },
     inputWrapFocused: {
         borderColor: theme.colors.borderFocus,
-        backgroundColor: '#191919',
+        backgroundColor: '#1C2830',
     },
     inputWrapError: {
         borderColor: theme.colors.borderError,
         backgroundColor: theme.colors.errorBg,
     },
     inputWrapDisabled: {
-        opacity: 0.45,
+        opacity: 0.4,
     },
     leftIcon: {
         marginLeft: 13,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: theme.colors.textPrimary,
         paddingHorizontal: 10,
-        paddingVertical: 12,
+        paddingVertical: 13,
     },
     eyeButton: {
         paddingLeft: 6,

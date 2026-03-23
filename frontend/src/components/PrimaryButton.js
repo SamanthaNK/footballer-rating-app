@@ -14,7 +14,7 @@ export default function PrimaryButton({ label, onPress, loading, disabled }) {
         >
             {loading ? (
                 <View style={styles.loadingRow}>
-                    <ActivityIndicator size="small" color="#555" />
+                    <ActivityIndicator size="small" color={theme.colors.textSecondary} />
                     <Text style={styles.loadingText}>{label}</Text>
                 </View>
             ) : (
@@ -39,14 +39,14 @@ const styles = StyleSheet.create({
         borderColor: theme.colors.border,
     },
     text: {
-        fontFamily: theme.fonts.display500,
+        fontFamily: theme.fonts.display700,
         fontSize: 13,
         letterSpacing: 4,
         color: theme.colors.btnText,
         textTransform: 'uppercase',
     },
     textDisabled: {
-        color: '#404040',
+        color: theme.colors.textSecondary,
     },
     loadingRow: {
         flexDirection: 'row',
@@ -54,10 +54,10 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     loadingText: {
-        fontFamily: theme.fonts.display500,
+        fontFamily: theme.fonts.display700,
         fontSize: 13,
         letterSpacing: 4,
-        color: '#404040',
+        color: theme.colors.textSecondary,
         textTransform: 'uppercase',
     },
 });

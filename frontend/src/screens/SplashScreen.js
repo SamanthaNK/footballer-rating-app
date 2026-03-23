@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
         width: 5,
         height: 5,
         borderRadius: 3,
-        backgroundColor: '#444',
+        backgroundColor: theme.colors.accent,
     },
 });
