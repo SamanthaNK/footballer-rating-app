@@ -26,4 +26,24 @@ export const authApi = {
     resetPassword: (data) => apiClient.post('/auth/reset-password', data),
 };
 
+export const footballerApi = {
+    getAll: (limit = 20, cursor = null) => apiClient.get('/footballers', { params: { limit, cursor } }),
+    search: (params) => apiClient.get('/footballers/search', { params }),
+    getById: (id) => apiClient.get(`/footballers/${id}`),
+};
+
+export const ratingApi = {
+    submit: (data) => apiClient.post('/ratings', data),
+    update: (ratingId, data) => apiClient.put(`/ratings/${ratingId}`, data),
+    delete: (ratingId) => apiClient.delete(`/ratings/${ratingId}`),
+};
+
+export const userApi = {
+    getProfile: (userId) => apiClient.get(`/users/${userId}`),
+};
+
+export const leaderboardApi = {
+    getTop20: () => apiClient.get('/leaderboard'),
+};
+
 export default apiClient;
